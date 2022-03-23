@@ -32,7 +32,7 @@ public class FileManager {
 	// claro que pode perguntar se estiver curioso)
 
 	public String load(String path) {
-		String content;
+		String content = null;
 
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), decoder));
@@ -50,10 +50,8 @@ public class FileManager {
 			log.add("Leitor fechado");
 		} catch (FileNotFoundException exception) {
 			log.add("Arquivo não encontrado: " + exception.getMessage());
-			content = null;
 		} catch (IOException exception) {
 			log.add("Erro de leitura: " + exception.getMessage());
-			content = null;
 		}
 
 		return content;
