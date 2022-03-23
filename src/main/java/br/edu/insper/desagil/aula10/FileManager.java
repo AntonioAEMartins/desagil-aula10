@@ -51,12 +51,12 @@ public class FileManager {
 		return content;
 	}
 
-	public void save(String path, String content) {
+	public void save(String path, String content) throws SaveException {
 		try (FileWriter writer = new FileWriter(path)) {
 			writer.write(content);
 			log.add("Conteúdo escrito");
-		} catch (IOException exception) {
-			log.add("Erro de escrita: " + exception.getMessage());
+		} catch (IOException writeException) {
+			throw new SaveException("Erro de escrita: " + writeException.getMessage());
 		}
 	}
 }

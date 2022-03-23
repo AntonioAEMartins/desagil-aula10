@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,9 +49,8 @@ public class FileManagerTest {
 	public void testSave() {
 		String path = "saida.txt";
 		String content = "goodbye universe\n";
-		f.save(path, content);
-		List<String> log = f.getLog();
-		assertEquals(1, log.size());
-		assertEquals("Conteúdo escrito", log.get(0));
+		assertDoesNotThrow(() -> {
+			f.save(path, content);
+		});
 	}
 }
