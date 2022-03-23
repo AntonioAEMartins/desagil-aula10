@@ -31,7 +31,7 @@ public class FileManager {
 	// Não precisa entender o código acima. (mas
 	// claro que pode perguntar se estiver curioso)
 
-	public String load(String path) {
+	public String load(String path) throws LoadException {
 		String content = null;
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), decoder))) {
@@ -43,9 +43,9 @@ public class FileManager {
 			content = builder.toString();
 			log.add("Conteúdo lido");
 		} catch (FileNotFoundException exception) {
-			log.add("Arquivo não encontrado: " + exception.getMessage());
-		} catch (IOException exception) {
-			log.add("Erro de leitura: " + exception.getMessage());
+			throw new LoadException("Arquivo não encontrado: " + exception.getMessage());
+		} catch (IOException readException) {
+			throw new LoadException("Erro de leitura: " + readException.getMessage());
 		}
 
 		return content;

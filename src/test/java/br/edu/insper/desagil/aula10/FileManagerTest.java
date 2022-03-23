@@ -1,7 +1,8 @@
 package br.edu.insper.desagil.aula10;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -21,31 +22,28 @@ public class FileManagerTest {
 	@Test
 	public void testLoad() {
 		String path = "entrada.txt";
-		String content = f.load(path);
+		String content = assertDoesNotThrow(() -> {
+			return f.load(path);
+		});
 		assertEquals("hello world\n", content);
-		List<String> log = f.getLog();
-		assertEquals(1, log.size());
-		assertEquals("Conteúdo lido", log.get(0));
 	}
 
 	@Test
 	public void testLoadMissing() {
 		String path = "missing.txt";
-		String content = f.load(path);
-		assertNull(content);
-		List<String> log = f.getLog();
-		assertEquals(1, log.size());
-		assertTrue(log.get(0).startsWith("Arquivo não encontrado: "));
+		LoadException exception = assertThrows(LoadException.class, () -> {
+			f.load(path);
+		});
+		assertTrue(exception.getMessage().startsWith("Arquivo não encontrado: "));
 	}
 
 	@Test
 	public void testLoadInvalid() {
 		String path = "binario.txt";
-		String content = f.load(path);
-		assertNull(content);
-		List<String> log = f.getLog();
-		assertEquals(1, log.size());
-		assertTrue(log.get(0).startsWith("Erro de leitura: "));
+		LoadException exception = assertThrows(LoadException.class, () -> {
+			f.load(path);
+		});
+		assertTrue(exception.getMessage().startsWith("Erro de leitura: "));
 	}
 
 	@Test
