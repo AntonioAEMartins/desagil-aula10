@@ -34,8 +34,9 @@ public class FileManager {
 	public String load(String path) {
 		String content = null;
 
+		BufferedReader reader = null;
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), decoder));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), decoder));
 			log.add("Leitor aberto");
 
 			String line;
@@ -52,6 +53,12 @@ public class FileManager {
 			log.add("Arquivo não encontrado: " + exception.getMessage());
 		} catch (IOException exception) {
 			log.add("Erro de leitura: " + exception.getMessage());
+			try {
+				reader.close();
+				log.add("Leitor fechado");
+			} catch (IOException closeException) {
+				log.add("Erro de fechamento: " + closeException.getMessage());
+			}
 		}
 
 		return content;
