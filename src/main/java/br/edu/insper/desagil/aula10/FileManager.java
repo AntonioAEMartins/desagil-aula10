@@ -52,15 +52,9 @@ public class FileManager {
 	}
 
 	public void save(String path, String content) {
-		try {
-			FileWriter writer = new FileWriter(path);
-			log.add("Escritor aberto");
-
+		try (FileWriter writer = new FileWriter(path)) {
 			writer.write(content);
 			log.add("Conteúdo escrito");
-
-			writer.close();
-			log.add("Escritor fechado");
 		} catch (IOException exception) {
 			log.add("Erro de escrita: " + exception.getMessage());
 		}

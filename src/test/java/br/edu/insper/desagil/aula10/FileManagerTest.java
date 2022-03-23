@@ -54,9 +54,7 @@ public class FileManagerTest {
 		String content = "goodbye universe\n";
 		f.save(path, content);
 		List<String> log = f.getLog();
-		assertEquals(3, log.size());
-		assertEquals("Escritor aberto", log.get(0));
-		assertEquals("Conteúdo escrito", log.get(1));
-		assertEquals("Escritor fechado", log.get(2));
+		assertEquals(1, log.size());
+		assertEquals("Conteúdo escrito", log.get(0));
 	}
 }
