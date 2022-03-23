@@ -24,10 +24,8 @@ public class FileManagerTest {
 		String content = f.load(path);
 		assertEquals("hello world\n", content);
 		List<String> log = f.getLog();
-		assertEquals(3, log.size());
-		assertEquals("Leitor aberto", log.get(0));
-		assertEquals("Conteúdo lido", log.get(1));
-		assertEquals("Leitor fechado", log.get(2));
+		assertEquals(1, log.size());
+		assertEquals("Conteúdo lido", log.get(0));
 	}
 
 	@Test
@@ -46,10 +44,8 @@ public class FileManagerTest {
 		String content = f.load(path);
 		assertNull(content);
 		List<String> log = f.getLog();
-		assertEquals(3, log.size());
-		assertEquals("Leitor aberto", log.get(0));
-		assertTrue(log.get(1).startsWith("Erro de leitura: "));
-		assertEquals("Leitor fechado", log.get(2));
+		assertEquals(1, log.size());
+		assertTrue(log.get(0).startsWith("Erro de leitura: "));
 	}
 
 	@Test
